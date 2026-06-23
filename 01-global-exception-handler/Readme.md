@@ -6,7 +6,7 @@ This module demonstrates a centralized exception handling mechanism in Spring Bo
 
 * **`ResourceConflictException`**: A custom runtime exception designed to represent business-logic conflicts, such as overlapping data intervals, double-bookings, or state conflicts.
 * **`ErrorResponse`**: A rigid data transfer object (DTO) that defines a consistent contract for error structures sent back to the client. It standardizes fields such as the success status, human-readable message, and timestamp.
-* **`GlobalExceptionHandler`**: A central orchestrator annotated with `@RestControllerAdvice`. It intercepts specified exceptions system-wide, logs the failure context, and returns an appropriate HTTP status code (`409 Conflict`) with a structured JSON payload.
+* **`GlobalExceptionHandler`**: A central orchestrator annotated with @RestControllerAdvice. It intercepts specified exceptions system-wide, logs the failure context, and returns an appropriate HTTP status code (409 Conflict) with a structured JSON payload.
 
 ## Key Benefits Demonstrated
 
