@@ -5,5 +5,5 @@ Welcome to my Backend Showcase repository. This project contains a collection of
 ## 🛠️ Enterprise Tech Stack
 * **Framework:** Spring Boot 3.x (Spring Web, Spring Security, Spring Data JPA).
 * **Database & ORM:** PostgreSQL, Hibernate.
-* **Security:** Stateless JWT authentication via `HttpOnly` Secure Cookies.
+* **Security:** Stateless JWT authentication via HttpOnly Secure Cookies.
 * **Testing & Tools:** JUnit 5, Mockito, MapStruct, Jackson.
