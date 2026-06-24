@@ -1,4 +1,9 @@
 package org.example.springstarter.repository;
 
-public class TodoRepository {
+import org.example.springstarter.model.Todo;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+public interface TodoRepository extends JpaRepository<Todo,Long>{
+
 }
