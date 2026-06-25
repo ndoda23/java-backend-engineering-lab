@@ -1,7 +1,9 @@
 package org.example.springstarter.controller;
 
+import jakarta.validation.Valid;
 import org.example.springstarter.model.Todo;
 import org.example.springstarter.service.TodoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +28,7 @@ public class TodoController {
     }
 
     @PostMapping
-    public Todo create(@RequestBody Todo todo){
+    public Todo create(@Valid @RequestBody Todo todo){
         return todoService.create(todo);
     }
 
@@ -34,4 +36,11 @@ public class TodoController {
     public void delete(@PathVariable Long id){
         todoService.delete(id);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Todo> createTodo(@PathVariable Long id,@Valid @RequestBody Todo todoDetails){
+        Todo updatedTodo = todoService.updateTodo(id,todoDetails);
+        return  ResponseEntity.ok(updatedTodo);
+    }
+
 }
