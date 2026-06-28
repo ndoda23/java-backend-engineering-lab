@@ -1,4 +1,4 @@
-package org.example.springeshopapi.Repository;
+package org.example.springeshopapi.repository;
 
 import org.example.springeshopapi.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;

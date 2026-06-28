@@ -8,6 +8,8 @@ import java.util.List;
 public class OrderRequest
 {
     private List<OrderItemRequest> items;
+    private Long userId;
+
 
     @Data
     public static class OrderItemRequest{
