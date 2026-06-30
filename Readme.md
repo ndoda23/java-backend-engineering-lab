@@ -5,5 +5,5 @@ Welcome to my Backend Showcase repository. This project contains a collection of
 ## 🛠️ Enterprise Tech Stack
 * **Framework:** Spring Boot (Spring Web, Spring Security, Spring Data JPA).
 * **Database & ORM:** PostgreSQL, Hibernate.
-* **Security:** Stateless JWT authentication via HttpOnly Secure Cookies.
-
+* **Security:** Stateless JWT authentication via HttpOnly Secure Cookies or via HTTP Authorization Header (Bearer Token).
+* **Architecture & Extras:** Global Exception Handling for unified error responses, DTO Validation.
