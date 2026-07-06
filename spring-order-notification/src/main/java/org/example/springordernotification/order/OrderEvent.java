@@ -12,6 +12,6 @@ import java.time.LocalDateTime;
 public class OrderEvent implements Serializable {
     private Long orderId;
     private String customerEmail;
-    private String status;
+    private OrderStatus  status;
     private LocalDateTime createdAt;
 }
