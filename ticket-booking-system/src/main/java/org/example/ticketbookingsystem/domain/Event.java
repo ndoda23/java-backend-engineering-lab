@@ -3,7 +3,6 @@ package org.example.ticketbookingsystem.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -33,4 +32,12 @@ public class Event {
 
     @Column(nullable = false)
     private Double basePrice;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 }

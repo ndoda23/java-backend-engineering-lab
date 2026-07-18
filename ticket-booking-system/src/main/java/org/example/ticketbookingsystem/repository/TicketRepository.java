@@ -14,8 +14,13 @@ import java.util.List;
 public interface TicketRepository extends JpaRepository<Ticket,Long> {
      List<Ticket> findByEventIdAndStatus(Long eventId, TicketStatus status);
 
-    @Modifying
-    @Query("UPDATE Ticket t SET t.status = :newStatus, t.version = t.version + 1 " +
+    /**
+     * Conditional bulk update: only rows still in {@code expectedStatus} change.
+     * Do not bump {@code version} here — JPA {@code @Version} owns that on entity saves;
+     * the status predicate is the concurrency guard for this path.
+     */
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Query("UPDATE Ticket t SET t.status = :newStatus " +
             "WHERE t.id IN :ticketIds AND t.status = :expectedStatus")
     int updateTicketStatusSecurely(@Param("ticketIds") List<Long> ticketIds,
                                    @Param("newStatus") TicketStatus newStatus,

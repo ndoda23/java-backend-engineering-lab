@@ -1,6 +1,5 @@
 package org.example.ticketbookingsystem.domain;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,10 +18,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String passwordHash;
 
     @Column(nullable = false)
@@ -31,12 +30,16 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @Builder.Default
+    private Role role = Role.USER;
+
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
-
 }

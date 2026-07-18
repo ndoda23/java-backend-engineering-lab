@@ -4,7 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "tickets")
+@Table(
+        name = "tickets",
+        uniqueConstraints = @UniqueConstraint(
+                name = "uk_ticket_event_seat",
+                columnNames = {"event_id", "seat_row", "seat_number"}
+        )
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,14 +22,18 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id",nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "event_id", nullable = false)
     private Event event;
 
-    @Column(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "booking_id")
+    private Booking booking;
+
+    @Column(name = "seat_row", nullable = false)
     private String seatRow;
 
-    @Column(nullable = false)
+    @Column(name = "seat_number", nullable = false)
     private Integer seatNumber;
 
     @Column(nullable = false)
@@ -31,9 +41,9 @@ public class Ticket {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TicketStatus status;
+    @Builder.Default
+    private TicketStatus status = TicketStatus.AVAILABLE;
 
-    // for optimistic lock
     @Version
     private Long version;
 }
