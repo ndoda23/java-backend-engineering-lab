@@ -14,6 +14,10 @@ import java.util.List;
 public interface TicketRepository extends JpaRepository<Ticket,Long> {
      List<Ticket> findByEventIdAndStatus(Long eventId, TicketStatus status);
 
+     long countByEventId(Long eventId);
+
+     long countByEventIdAndStatus(Long eventId, TicketStatus status);
+
     /**
      * Conditional bulk update: only rows still in {@code expectedStatus} change.
      * Do not bump {@code version} here — JPA {@code @Version} owns that on entity saves;

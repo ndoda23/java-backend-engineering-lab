@@ -46,4 +46,23 @@ public class Ticket {
 
     @Version
     private Long version;
+
+    public void markPending() {
+        if (status != TicketStatus.AVAILABLE) {
+            throw new IllegalStateException("Only available tickets can be held");
+        }
+        this.status = TicketStatus.PENDING;
+    }
+
+    public void markBooked() {
+        if (status != TicketStatus.PENDING) {
+            throw new IllegalStateException("Only pending tickets can be booked");
+        }
+        this.status = TicketStatus.BOOKED;
+    }
+
+    public void release() {
+        this.status = TicketStatus.AVAILABLE;
+        this.booking = null;
+    }
 }

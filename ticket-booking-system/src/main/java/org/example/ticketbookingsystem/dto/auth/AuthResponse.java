@@ -1,4 +1,4 @@
-package org.example.ticketbookingsystem.dto;
+package org.example.ticketbookingsystem.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

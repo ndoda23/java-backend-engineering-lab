@@ -2,9 +2,9 @@ package org.example.ticketbookingsystem.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.example.ticketbookingsystem.dto.AuthResponse;
-import org.example.ticketbookingsystem.dto.LoginRequest;
-import org.example.ticketbookingsystem.dto.RegisterRequest;
+import org.example.ticketbookingsystem.dto.auth.AuthResponse;
+import org.example.ticketbookingsystem.dto.auth.LoginRequest;
+import org.example.ticketbookingsystem.dto.auth.RegisterRequest;
 import org.example.ticketbookingsystem.service.AuthService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
