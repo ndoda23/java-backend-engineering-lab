@@ -12,6 +12,8 @@ import org.example.ticketbookingsystem.dto.booking.CreateBookingRequest;
 import org.example.ticketbookingsystem.exception.ConflictException;
 import org.example.ticketbookingsystem.exception.ForbiddenException;
 import org.example.ticketbookingsystem.exception.NotFoundException;
+import org.example.ticketbookingsystem.messaging.BookingConfirmedEvent;
+import org.example.ticketbookingsystem.messaging.BookingEventPublisher;
 import org.example.ticketbookingsystem.repository.BookingRepository;
 import org.example.ticketbookingsystem.repository.TicketRepository;
 import org.example.ticketbookingsystem.repository.UserRepository;
@@ -32,6 +34,7 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final TicketRepository ticketRepository;
     private final UserRepository userRepository;
+    private final BookingEventPublisher bookingEventPublisher;
 
     @Value("${app.booking.hold-minutes:10}")
     private long holdMinutes;
@@ -99,7 +102,9 @@ public class BookingService {
             throw new ConflictException(ex.getMessage());
         }
 
-        return toResponse(bookingRepository.save(booking));
+        Booking saved = bookingRepository.save(booking);
+        publishBookingConfirmed(saved);
+        return toResponse(saved);
     }
 
     @Transactional
@@ -148,6 +153,16 @@ public class BookingService {
             throw new ConflictException("Duplicate ticket ids are not allowed");
         }
         return List.copyOf(unique);
+    }
+
+    private void publishBookingConfirmed(Booking booking) {
+        bookingEventPublisher.publishBookingConfirmed(BookingConfirmedEvent.builder()
+                .bookingId(booking.getId())
+                .userEmail(booking.getUser().getEmail())
+                .totalPrice(booking.getTotalPrice())
+                .ticketCount(booking.getTickets().size())
+                .confirmedAt(LocalDateTime.now())
+                .build());
     }
 
     private BookingResponse toResponse(Booking booking) {
