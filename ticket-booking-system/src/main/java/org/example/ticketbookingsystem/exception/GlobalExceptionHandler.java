@@ -4,6 +4,8 @@ import org.example.ticketbookingsystem.dto.auth.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authorization.AuthorizationDeniedException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,9 +26,13 @@ public class GlobalExceptionHandler {
         return build(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(ForbiddenException.class)
-    public ResponseEntity<ErrorResponse> handleForbidden(ForbiddenException ex) {
-        return build(ex.getMessage(), HttpStatus.FORBIDDEN);
+    @ExceptionHandler({
+            ForbiddenException.class,
+            AccessDeniedException.class,
+            AuthorizationDeniedException.class
+    })
+    public ResponseEntity<ErrorResponse> handleForbidden(RuntimeException ex) {
+        return build(ex.getMessage() != null ? ex.getMessage() : "Access Denied", HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler({UnauthorizedException.class, BadCredentialsException.class, UsernameNotFoundException.class})
